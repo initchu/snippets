@@ -1,8 +1,9 @@
-TODO list
-=========
-- [ ] Add pagination to /api/v1/events endpoint
-- [ ] Write integration tests for the auth flow
-- [x] Upgrade PyYAML to 6.0.1
-- [x] Add health-check endpoint
+Code review checklist
+======================
+[ ] Logic is correct and handles edge cases
+[ ] No sensitive data in code or comments
+[ ] Functions are small and single-responsibility
+[ ] Error paths are handled and logged
+[ ] New code has corresponding tests
 
-2026-04-23 10:21:39
+2026-04-24 05:53:44
