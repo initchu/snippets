@@ -1,19 +1,14 @@
-import sqlite3
-from contextlib import contextmanager
+from pathlib import Path
+import json
 
 
-@contextmanager
-def get_connection(db_path):
-    conn = sqlite3.connect(db_path)
-    try:
-        conn.execute("PRAGMA journal_mode=WAL")
-        conn.execute("PRAGMA foreign_keys=ON")
-        yield conn
-        conn.commit()
-    except Exception:
-        conn.rollback()
-        raise
-    finally:
-        conn.close()
+def load_json(path) -> dict:
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
 
-# 2026-04-24 04:18:16
+
+def save_json(data: dict, path, indent: int = 2) -> None:
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=indent)
+
+# 2026-04-26 06:02:37
