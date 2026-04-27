@@ -1,7 +1,9 @@
-Performance profiling notes
-============================
-- Identified N+1 query in user listing; fixed with select_related()
-- Reduced average response time from 320 ms to 45 ms after adding DB index
-- Memory usage stable at ~180 MB under 500 concurrent connections
+Code review checklist
+======================
+[ ] Logic is correct and handles edge cases
+[ ] No sensitive data in code or comments
+[ ] Functions are small and single-responsibility
+[ ] Error paths are handled and logged
+[ ] New code has corresponding tests
 
-2026-04-24 10:22:24
+2026-04-27 11:05:08
