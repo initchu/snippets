@@ -1,9 +1,8 @@
-Code review checklist
-======================
-[ ] Logic is correct and handles edge cases
-[ ] No sensitive data in code or comments
-[ ] Functions are small and single-responsibility
-[ ] Error paths are handled and logged
-[ ] New code has corresponding tests
+TODO list
+=========
+- [ ] Add pagination to /api/v1/events endpoint
+- [ ] Write integration tests for the auth flow
+- [x] Upgrade PyYAML to 6.0.1
+- [x] Add health-check endpoint
 
-2026-04-28 11:06:08
+2026-04-29 08:23:20
