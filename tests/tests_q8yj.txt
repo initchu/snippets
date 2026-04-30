@@ -1,0 +1,9 @@
+Code review checklist
+======================
+[ ] Logic is correct and handles edge cases
+[ ] No sensitive data in code or comments
+[ ] Functions are small and single-responsibility
+[ ] Error paths are handled and logged
+[ ] New code has corresponding tests
+
+2026-04-30 10:56:24
