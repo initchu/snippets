@@ -1,14 +1,25 @@
-import hashlib
-import hmac
+import threading
 
 
-def sign_payload(payload: bytes, secret: str) -> str:
-    key = secret.encode()
-    return hmac.new(key, payload, hashlib.sha256).hexdigest()
+class TokenBucket:
+    def __init__(self, rate: float, capacity: float) -> None:
+        self._rate = rate
+        self._capacity = capacity
+        self._tokens = capacity
+        self._lock = threading.Lock()
+        self._last = __import__("time").monotonic()
 
+    def consume(self, tokens: float = 1.0) -> bool:
+        with self._lock:
+            now = __import__("time").monotonic()
+            self._tokens = min(
+                self._capacity,
+                self._tokens + (now - self._last) * self._rate,
+            )
+            self._last = now
+            if self._tokens >= tokens:
+                self._tokens -= tokens
+                return True
+            return False
 
-def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
-    expected = sign_payload(payload, secret)
-    return hmac.compare_digest(expected, signature)
-
-# 2026-04-27 14:11:15
+# 2026-04-30 04:33:21
