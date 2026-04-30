@@ -1,14 +1,17 @@
-from pathlib import Path
-import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-def load_json(path) -> dict:
-    with open(path, encoding="utf-8") as fh:
-        return json.load(fh)
+def retry(func, max_attempts: int = 3, delay: float = 1.0):
+    import time
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return func()
+        except Exception as exc:
+            logger.warning("Attempt %d/%d failed: %s", attempt, max_attempts, exc)
+            if attempt == max_attempts:
+                raise
+            time.sleep(delay)
 
-
-def save_json(data: dict, path, indent: int = 2) -> None:
-    with open(path, "w", encoding="utf-8") as fh:
-        json.dump(data, fh, ensure_ascii=False, indent=indent)
-
-# 2026-04-22 10:19:18
+# 2026-04-30 08:25:59
