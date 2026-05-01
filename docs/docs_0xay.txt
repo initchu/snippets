@@ -4,4 +4,4 @@ Performance profiling notes
 - Reduced average response time from 320 ms to 45 ms after adding DB index
 - Memory usage stable at ~180 MB under 500 concurrent connections
 
-2026-04-29 04:30:47
+2026-05-01 10:23:17
