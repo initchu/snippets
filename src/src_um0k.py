@@ -1,25 +1,19 @@
-import threading
+import sqlite3
+from contextlib import contextmanager
 
 
-class TokenBucket:
-    def __init__(self, rate: float, capacity: float) -> None:
-        self._rate = rate
-        self._capacity = capacity
-        self._tokens = capacity
-        self._lock = threading.Lock()
-        self._last = __import__("time").monotonic()
+@contextmanager
+def get_connection(db_path):
+    conn = sqlite3.connect(db_path)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA foreign_keys=ON")
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
 
-    def consume(self, tokens: float = 1.0) -> bool:
-        with self._lock:
-            now = __import__("time").monotonic()
-            self._tokens = min(
-                self._capacity,
-                self._tokens + (now - self._last) * self._rate,
-            )
-            self._last = now
-            if self._tokens >= tokens:
-                self._tokens -= tokens
-                return True
-            return False
-
-# 2026-04-22 07:53:42
+# 2026-05-01 13:41:23
