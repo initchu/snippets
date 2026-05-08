@@ -1,25 +1,14 @@
-import threading
+from pathlib import Path
+import json
 
 
-class TokenBucket:
-    def __init__(self, rate: float, capacity: float) -> None:
-        self._rate = rate
-        self._capacity = capacity
-        self._tokens = capacity
-        self._lock = threading.Lock()
-        self._last = __import__("time").monotonic()
+def load_json(path) -> dict:
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
 
-    def consume(self, tokens: float = 1.0) -> bool:
-        with self._lock:
-            now = __import__("time").monotonic()
-            self._tokens = min(
-                self._capacity,
-                self._tokens + (now - self._last) * self._rate,
-            )
-            self._last = now
-            if self._tokens >= tokens:
-                self._tokens -= tokens
-                return True
-            return False
 
-# 2026-04-30 04:33:21
+def save_json(data: dict, path, indent: int = 2) -> None:
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=indent)
+
+# 2026-05-08 10:25:13
