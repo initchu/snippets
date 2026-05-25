@@ -1,17 +1,19 @@
-import logging
+import sqlite3
+from contextlib import contextmanager
 
-logger = logging.getLogger(__name__)
 
+@contextmanager
+def get_connection(db_path):
+    conn = sqlite3.connect(db_path)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA foreign_keys=ON")
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
 
-def retry(func, max_attempts: int = 3, delay: float = 1.0):
-    import time
-    for attempt in range(1, max_attempts + 1):
-        try:
-            return func()
-        except Exception as exc:
-            logger.warning("Attempt %d/%d failed: %s", attempt, max_attempts, exc)
-            if attempt == max_attempts:
-                raise
-            time.sleep(delay)
-
-# 2026-05-25 08:01:28
+# 2026-05-25 10:13:08
