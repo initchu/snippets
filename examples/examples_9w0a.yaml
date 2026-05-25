@@ -1,14 +1,12 @@
-metrics:
-  enabled: true
-  port: 9090
-  path: /metrics
+app:
+  name: devpulse
+  version: "1.0.0"
+  log_level: info
 
-alerts:
-  - name: high_error_rate
-    condition: error_rate > 0.05
-    severity: critical
-  - name: slow_response
-    condition: p99_latency_ms > 500
-    severity: warning
+server:
+  host: 0.0.0.0
+  port: 8080
+  workers: 4
+  timeout: 30
 
-# 2026-05-15 08:52:19
+# 2026-05-25 12:31:27
