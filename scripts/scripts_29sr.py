@@ -1,14 +1,17 @@
-import hashlib
-import hmac
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-def sign_payload(payload: bytes, secret: str) -> str:
-    key = secret.encode()
-    return hmac.new(key, payload, hashlib.sha256).hexdigest()
+def retry(func, max_attempts: int = 3, delay: float = 1.0):
+    import time
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return func()
+        except Exception as exc:
+            logger.warning("Attempt %d/%d failed: %s", attempt, max_attempts, exc)
+            if attempt == max_attempts:
+                raise
+            time.sleep(delay)
 
-
-def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
-    expected = sign_payload(payload, secret)
-    return hmac.compare_digest(expected, signature)
-
-# 2026-05-08 14:04:29
+# 2026-05-25 08:01:28
