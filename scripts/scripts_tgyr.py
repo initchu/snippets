@@ -1,14 +1,14 @@
-from pathlib import Path
-import json
+import hashlib
+import hmac
 
 
-def load_json(path) -> dict:
-    with open(path, encoding="utf-8") as fh:
-        return json.load(fh)
+def sign_payload(payload: bytes, secret: str) -> str:
+    key = secret.encode()
+    return hmac.new(key, payload, hashlib.sha256).hexdigest()
 
 
-def save_json(data: dict, path, indent: int = 2) -> None:
-    with open(path, "w", encoding="utf-8") as fh:
-        json.dump(data, fh, ensure_ascii=False, indent=indent)
+def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
+    expected = sign_payload(payload, secret)
+    return hmac.compare_digest(expected, signature)
 
-# 2026-05-21 05:10:29
+# 2026-05-27 07:45:59
