@@ -1,15 +1,14 @@
-from dataclasses import dataclass, field
-from typing import List
+from pathlib import Path
+import json
 
 
-@dataclass
-class Config:
-    host: str = "localhost"
-    port: int = 8080
-    tags: List[str] = field(default_factory=list)
-    debug: bool = False
+def load_json(path) -> dict:
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
 
-    def endpoint(self) -> str:
-        return f"http://{self.host}:{self.port}"
 
-# 2026-05-14 08:40:43
+def save_json(data: dict, path, indent: int = 2) -> None:
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=indent)
+
+# 2026-05-27 15:59:50
