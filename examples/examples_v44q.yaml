@@ -11,4 +11,4 @@ alerts:
     condition: p99_latency_ms > 500
     severity: warning
 
-# 2026-05-22 11:45:45
+# 2026-06-04 15:30:39
