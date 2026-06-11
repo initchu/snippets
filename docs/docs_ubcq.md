@@ -1,15 +1,13 @@
-# Architecture Overview
+# Changelog
 
-## Components
+## [Unreleased]
 
-- **API Gateway** – routes incoming requests to the appropriate service
-- **Core Service** – handles business logic and data processing
-- **Storage Layer** – persists data using a relational database
+### Added
+- Configurable retry logic for network requests
+- Token bucket rate limiter for external API calls
 
-## Data Flow
+### Fixed
+- Race condition when multiple workers write to the same log file
+- Off-by-one error in pagination offset calculation
 
-```
-Client → API Gateway → Core Service → Storage Layer
-```
-
-<!-- 2026-05-25 15:20:26 -->
+<!-- 2026-06-11 05:50:40 -->
