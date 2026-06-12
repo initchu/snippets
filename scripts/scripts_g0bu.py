@@ -1,15 +1,19 @@
-import time
-from functools import wraps
+import sqlite3
+from contextlib import contextmanager
 
 
-def timed(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.perf_counter()
-        result = func(*args, **kwargs)
-        elapsed = time.perf_counter() - start
-        print(f"{func.__name__} finished in {elapsed:.4f}s")
-        return result
-    return wrapper
+@contextmanager
+def get_connection(db_path):
+    conn = sqlite3.connect(db_path)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA foreign_keys=ON")
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
 
-# 2026-06-09 12:04:50
+# 2026-06-12 12:19:53
