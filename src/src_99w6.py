@@ -1,17 +1,15 @@
-import logging
+import time
+from functools import wraps
 
-logger = logging.getLogger(__name__)
 
+def timed(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        print(f"{func.__name__} finished in {elapsed:.4f}s")
+        return result
+    return wrapper
 
-def retry(func, max_attempts: int = 3, delay: float = 1.0):
-    import time
-    for attempt in range(1, max_attempts + 1):
-        try:
-            return func()
-        except Exception as exc:
-            logger.warning("Attempt %d/%d failed: %s", attempt, max_attempts, exc)
-            if attempt == max_attempts:
-                raise
-            time.sleep(delay)
-
-# 2026-06-15 12:20:04
+# 2026-07-09 15:23:43
