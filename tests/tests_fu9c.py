@@ -1,19 +1,14 @@
-import sqlite3
-from contextlib import contextmanager
+import hashlib
+import hmac
 
 
-@contextmanager
-def get_connection(db_path):
-    conn = sqlite3.connect(db_path)
-    try:
-        conn.execute("PRAGMA journal_mode=WAL")
-        conn.execute("PRAGMA foreign_keys=ON")
-        yield conn
-        conn.commit()
-    except Exception:
-        conn.rollback()
-        raise
-    finally:
-        conn.close()
+def sign_payload(payload: bytes, secret: str) -> str:
+    key = secret.encode()
+    return hmac.new(key, payload, hashlib.sha256).hexdigest()
 
-# 2026-05-29 09:57:43
+
+def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
+    expected = sign_payload(payload, secret)
+    return hmac.compare_digest(expected, signature)
+
+# 2026-07-13 04:31:48
