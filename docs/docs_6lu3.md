@@ -12,4 +12,4 @@
 Please email security@example.com with a description and steps to reproduce.
 We aim to respond within 48 hours.
 
-<!-- 2026-05-01 04:51:09 -->
+<!-- 2026-07-15 08:16:04 -->
