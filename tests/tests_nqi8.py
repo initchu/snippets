@@ -1,25 +1,15 @@
-import threading
+import time
+from functools import wraps
 
 
-class TokenBucket:
-    def __init__(self, rate: float, capacity: float) -> None:
-        self._rate = rate
-        self._capacity = capacity
-        self._tokens = capacity
-        self._lock = threading.Lock()
-        self._last = __import__("time").monotonic()
+def timed(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        print(f"{func.__name__} finished in {elapsed:.4f}s")
+        return result
+    return wrapper
 
-    def consume(self, tokens: float = 1.0) -> bool:
-        with self._lock:
-            now = __import__("time").monotonic()
-            self._tokens = min(
-                self._capacity,
-                self._tokens + (now - self._last) * self._rate,
-            )
-            self._last = now
-            if self._tokens >= tokens:
-                self._tokens -= tokens
-                return True
-            return False
-
-# 2026-06-03 11:04:12
+# 2026-07-16 04:09:40
