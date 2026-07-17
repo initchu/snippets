@@ -1,19 +1,15 @@
-import sqlite3
-from contextlib import contextmanager
+from dataclasses import dataclass, field
+from typing import List
 
 
-@contextmanager
-def get_connection(db_path):
-    conn = sqlite3.connect(db_path)
-    try:
-        conn.execute("PRAGMA journal_mode=WAL")
-        conn.execute("PRAGMA foreign_keys=ON")
-        yield conn
-        conn.commit()
-    except Exception:
-        conn.rollback()
-        raise
-    finally:
-        conn.close()
+@dataclass
+class Config:
+    host: str = "localhost"
+    port: int = 8080
+    tags: List[str] = field(default_factory=list)
+    debug: bool = False
 
-# 2026-05-28 07:05:53
+    def endpoint(self) -> str:
+        return f"http://{self.host}:{self.port}"
+
+# 2026-07-17 10:46:34
