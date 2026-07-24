@@ -1,15 +1,14 @@
-import time
-from functools import wraps
+from pathlib import Path
+import json
 
 
-def timed(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.perf_counter()
-        result = func(*args, **kwargs)
-        elapsed = time.perf_counter() - start
-        print(f"{func.__name__} finished in {elapsed:.4f}s")
-        return result
-    return wrapper
+def load_json(path) -> dict:
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
 
-# 2026-07-16 04:09:40
+
+def save_json(data: dict, path, indent: int = 2) -> None:
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=indent)
+
+# 2026-07-24 06:06:59
