@@ -1,15 +1,13 @@
-# Security Policy
+# Changelog
 
-## Supported Versions
+## [Unreleased]
 
-| Version | Supported |
-|---------|-----------|
-| 1.x     | ✅        |
-| < 1.0   | ❌        |
+### Added
+- Configurable retry logic for network requests
+- Token bucket rate limiter for external API calls
 
-## Reporting a Vulnerability
+### Fixed
+- Race condition when multiple workers write to the same log file
+- Off-by-one error in pagination offset calculation
 
-Please email security@example.com with a description and steps to reproduce.
-We aim to respond within 48 hours.
-
-<!-- 2026-07-09 11:57:49 -->
+<!-- 2026-07-28 14:23:23 -->
