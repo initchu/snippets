@@ -1,17 +1,15 @@
-import logging
+from dataclasses import dataclass, field
+from typing import List
 
-logger = logging.getLogger(__name__)
 
+@dataclass
+class Config:
+    host: str = "localhost"
+    port: int = 8080
+    tags: List[str] = field(default_factory=list)
+    debug: bool = False
 
-def retry(func, max_attempts: int = 3, delay: float = 1.0):
-    import time
-    for attempt in range(1, max_attempts + 1):
-        try:
-            return func()
-        except Exception as exc:
-            logger.warning("Attempt %d/%d failed: %s", attempt, max_attempts, exc)
-            if attempt == max_attempts:
-                raise
-            time.sleep(delay)
+    def endpoint(self) -> str:
+        return f"http://{self.host}:{self.port}"
 
-# 2026-07-30 04:06:43
+# 2026-08-03 04:31:13
