@@ -1,0 +1,14 @@
+metrics:
+  enabled: true
+  port: 9090
+  path: /metrics
+
+alerts:
+  - name: high_error_rate
+    condition: error_rate > 0.05
+    severity: critical
+  - name: slow_response
+    condition: p99_latency_ms > 500
+    severity: warning
+
+# 2026-08-04 04:15:21
