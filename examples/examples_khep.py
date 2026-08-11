@@ -1,14 +1,15 @@
-import hashlib
-import hmac
+import time
+from functools import wraps
 
 
-def sign_payload(payload: bytes, secret: str) -> str:
-    key = secret.encode()
-    return hmac.new(key, payload, hashlib.sha256).hexdigest()
+def timed(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        print(f"{func.__name__} finished in {elapsed:.4f}s")
+        return result
+    return wrapper
 
-
-def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
-    expected = sign_payload(payload, secret)
-    return hmac.compare_digest(expected, signature)
-
-# 2026-07-31 06:27:23
+# 2026-08-11 09:59:52
