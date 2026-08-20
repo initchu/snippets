@@ -1,0 +1,12 @@
+app:
+  name: devpulse
+  version: "1.0.0"
+  log_level: info
+
+server:
+  host: 0.0.0.0
+  port: 8080
+  workers: 4
+  timeout: 30
+
+# 2026-08-20 02:17:19
