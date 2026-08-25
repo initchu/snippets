@@ -1,14 +1,15 @@
-import hashlib
-import hmac
+from dataclasses import dataclass, field
+from typing import List
 
 
-def sign_payload(payload: bytes, secret: str) -> str:
-    key = secret.encode()
-    return hmac.new(key, payload, hashlib.sha256).hexdigest()
+@dataclass
+class Config:
+    host: str = "localhost"
+    port: int = 8080
+    tags: List[str] = field(default_factory=list)
+    debug: bool = False
 
+    def endpoint(self) -> str:
+        return f"http://{self.host}:{self.port}"
 
-def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
-    expected = sign_payload(payload, secret)
-    return hmac.compare_digest(expected, signature)
-
-# 2026-07-06 15:46:57
+# 2026-08-25 02:18:20
