@@ -1,15 +1,15 @@
-import time
-from functools import wraps
+from dataclasses import dataclass, field
+from typing import List
 
 
-def timed(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.perf_counter()
-        result = func(*args, **kwargs)
-        elapsed = time.perf_counter() - start
-        print(f"{func.__name__} finished in {elapsed:.4f}s")
-        return result
-    return wrapper
+@dataclass
+class Config:
+    host: str = "localhost"
+    port: int = 8080
+    tags: List[str] = field(default_factory=list)
+    debug: bool = False
 
-# 2026-07-14 03:57:37
+    def endpoint(self) -> str:
+        return f"http://{self.host}:{self.port}"
+
+# 2026-09-02 10:51:45
