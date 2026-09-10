@@ -1,17 +1,25 @@
-import logging
-
-logger = logging.getLogger(__name__)
+import threading
 
 
-def retry(func, max_attempts: int = 3, delay: float = 1.0):
-    import time
-    for attempt in range(1, max_attempts + 1):
-        try:
-            return func()
-        except Exception as exc:
-            logger.warning("Attempt %d/%d failed: %s", attempt, max_attempts, exc)
-            if attempt == max_attempts:
-                raise
-            time.sleep(delay)
+class TokenBucket:
+    def __init__(self, rate: float, capacity: float) -> None:
+        self._rate = rate
+        self._capacity = capacity
+        self._tokens = capacity
+        self._lock = threading.Lock()
+        self._last = __import__("time").monotonic()
 
-# 2026-07-12 06:26:47
+    def consume(self, tokens: float = 1.0) -> bool:
+        with self._lock:
+            now = __import__("time").monotonic()
+            self._tokens = min(
+                self._capacity,
+                self._tokens + (now - self._last) * self._rate,
+            )
+            self._last = now
+            if self._tokens >= tokens:
+                self._tokens -= tokens
+                return True
+            return False
+
+# 2026-09-10 10:52:16
