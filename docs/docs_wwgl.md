@@ -1,15 +1,15 @@
-# Security Policy
+# Architecture Overview
 
-## Supported Versions
+## Components
 
-| Version | Supported |
-|---------|-----------|
-| 1.x     | ✅        |
-| < 1.0   | ❌        |
+- **API Gateway** – routes incoming requests to the appropriate service
+- **Core Service** – handles business logic and data processing
+- **Storage Layer** – persists data using a relational database
 
-## Reporting a Vulnerability
+## Data Flow
 
-Please email security@example.com with a description and steps to reproduce.
-We aim to respond within 48 hours.
+```
+Client → API Gateway → Core Service → Storage Layer
+```
 
-<!-- 2026-06-12 15:29:36 -->
+<!-- 2026-09-17 05:51:54 -->
