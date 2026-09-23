@@ -11,4 +11,4 @@ def verify_signature(payload: bytes, secret: str, signature: str) -> bool:
     expected = sign_payload(payload, secret)
     return hmac.compare_digest(expected, signature)
 
-# 2026-07-13 04:31:48
+# 2026-09-23 05:36:28
