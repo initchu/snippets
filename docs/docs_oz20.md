@@ -1,13 +1,15 @@
-# Changelog
+# Architecture Overview
 
-## [Unreleased]
+## Components
 
-### Added
-- Configurable retry logic for network requests
-- Token bucket rate limiter for external API calls
+- **API Gateway** – routes incoming requests to the appropriate service
+- **Core Service** – handles business logic and data processing
+- **Storage Layer** – persists data using a relational database
 
-### Fixed
-- Race condition when multiple workers write to the same log file
-- Off-by-one error in pagination offset calculation
+## Data Flow
 
-<!-- 2026-10-01 06:57:41 -->
+```
+Client → API Gateway → Core Service → Storage Layer
+```
+
+<!-- 2026-10-06 10:34:48 -->
