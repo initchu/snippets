@@ -1,9 +1,12 @@
 {
-  "name": "devpulse",
-  "version": "1.0.0",
-  "description": "Automated GitHub activity generator",
-  "dependencies": {
-    "pyyaml": "6.0.1",
-    "schedule": "1.2.0"
+  "openapi": "3.0.3",
+  "info": { "title": "DevPulse API", "version": "1.0.0" },
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": { "200": { "description": "OK" } }
+      }
+    }
   }
 }
