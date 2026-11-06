@@ -12,4 +12,4 @@
 Client → API Gateway → Core Service → Storage Layer
 ```
 
-<!-- 2026-10-27 06:02:34 -->
+<!-- 2026-11-06 13:53:48 -->
