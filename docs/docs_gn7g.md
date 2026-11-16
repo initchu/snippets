@@ -1,13 +1,13 @@
-# Contributing Guide
+# Changelog
 
-1. Fork the repository and clone your fork.
-2. Create a feature branch: `git checkout -b feat/my-feature`
-3. Make your changes and add tests where appropriate.
-4. Run the test suite: `pytest`
-5. Open a pull request against `main`.
+## [Unreleased]
 
-## Code Style
+### Added
+- Configurable retry logic for network requests
+- Token bucket rate limiter for external API calls
 
-Follow [PEP 8](https://peps.python.org/pep-0008/) for Python code.
+### Fixed
+- Race condition when multiple workers write to the same log file
+- Off-by-one error in pagination offset calculation
 
-<!-- 2026-09-18 08:23:00 -->
+<!-- 2026-11-16 07:43:44 -->
